@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="./scripts/validation.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-expand-lg nav-fill w-100 navbar-dark bg-primary">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./chatlist.html">Group Chat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./userlist.html">Manage Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./documentlist.html">Manage Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Welcome.html" id="logout-btn">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <h1 class="text-center">Edit User</h1>
+
+        <div class="container pt-5">
+            <form action="./userlist.html" onsubmit="return updateUser()" class="needs-validation">
+                <div class="mb-3 mt-3">
+                    <label for="name" class="form-label">Full Name:</label>
+                    <input type="text" class="form-control" id="editname" placeholder="Enter name" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="editemail" placeholder="Email" name="Email">
+                </div>
+                <button class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const usersData = localStorage.getItem('users');
+        const url = window.location.href;
+        const urlParams = new URLSearchParams(new URL(url).search);
+        const userId = urlParams.get('id');
+
+
+        if (userId) {
+            // Find the user by ID
+
+            console.log(usersData);
+            const users = JSON.parse(usersData);
+
+            // Find the user by ID
+            const user = users.find(user => user.id == userId);
+
+            if (user) {
+                document.getElementById("editname").value = user.fullname;
+                document.getElementById("editemail").value = user.email;
+
+            } else {
+                console.log(`User with ID ${userId} not found.`);
+            }
+        } else {
+            console.log('ID parameter not found in URL');
+        }
+
+        function updateUser() {
+
+            let editname = document.getElementById("editname").value;
+            let editemail = document.getElementById("editemail").value;
+
+            // Retrieve the users data from localStorage
+            const updatesData = localStorage.getItem('users');
+
+            if (updatesData) {
+                // Parse the JSON string into an array of user objects
+                const updateuser = JSON.parse(updatesData);
+
+                // Find the index of the user by ID
+                const userIndex = updateuser.findIndex(user => user.id == userId);
+
+                if (userIndex !== -1) {
+                    // Update the user's fullname and email
+                    updateuser[userIndex].fullname = editname;
+                    updateuser[userIndex].email = editemail;
+                    localStorage.setItem('users', JSON.stringify(updateuser));
+                } else {
+                    console.log(`User with ID ${userId} not found.`);
+                }
+            } else {
+                console.log('No users data found in localStorage.');
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Success</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <script src="./scripts/validation.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        `
+        <nav class="navbar navbar-expand-lg nav-fill w-100 navbar-dark bg-primary">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./chatlist.html">Group Chat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./userlist.html">Manage Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./documentlist.html">Manage Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Welcome.html" id="logout-btn">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <h1 class="pt-5 text-center">Login Successfully </h1>
+        <div class="text-center mt5">
+           <strong> Welcome </strong> <span id="LoginUser"></span>
+        </div>
+    </div>
+
+    <script>
+        let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        console.log(loggedInUser);
+        if (window.location.pathname.includes("LoginSuccess.html")) {
+            if (loggedInUser) {
+                document.getElementById("LoginUser").innerText = loggedInUser.email;
+            } else {
+                document.getElementById("LoginUser").innerText = "User information not found.";
+            }
+        }
+    </script>
+
+   </body>
+
+</html>
