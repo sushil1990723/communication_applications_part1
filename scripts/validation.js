@@ -81,6 +81,12 @@ const loginValidate = (event) => {
       }
     }
 
+    if(loggedInUser ==  null){
+      alert('Password does not match');
+    }
+
+    console.log('loggedInUser', loggedInUser);
+
     if (validLogin) {
       localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
       location.href = "./LoginSuccess.html";
